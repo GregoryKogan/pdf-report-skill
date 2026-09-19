@@ -25,8 +25,9 @@
 ## Language
 
 The report speaks the language of the request. Same generator, same markup, same build —
-what changes is the prose, `<html lang>`, the decimal separator in the charts and the
-typographic conventions of that language.
+what changes is the prose, `<html lang>`, the spacing around `%` and the typographic
+conventions of that language. The decimal separator stays a period in all of them, on
+purpose — a report is read next to code and tables, and one separator is one less ambiguity.
 
 <p align="center">
   <img src="docs/readme/languages.png" alt="The same report built in English, Russian and Chinese" width="100%">
@@ -35,7 +36,7 @@ typographic conventions of that language.
 | | English | Russian | Chinese |
 |---|---|---|---|
 | Sample | [demo-en.pdf](docs/examples/demo-en.pdf) | [demo-ru.pdf](docs/examples/demo-ru.pdf) | [demo-zh.pdf](docs/examples/demo-zh.pdf) |
-| Decimal | `4.6` | `4,6` | `4.6` |
+| Decimal | `4.6` | `4.6` | `4.6` |
 | Before `%` | none | non-breaking space | none |
 | Quotes | "…" | «…» | 「…」 |
 | Line breaking | hyphenation | hyphenation | `line-break:strict`, no hyphens |

@@ -53,7 +53,7 @@ Three things depend on that language, and all three are set explicitly:
 | What | How |
 |---|---|
 | Line breaking and fonts | `<html lang="ru">` / `"en"` / `"zh"` — `base.css` keys hyphenation, CJK rules and the font fallback off it |
-| Numbers in charts | `charts.set_locale("ru")` **once, before the first chart** — decimal separator and the space before `%` |
+| Numbers in charts | `charts.set_locale("ru")` **once, before the first chart** — the space before `%` (the decimal separator is a period everywhere) |
 | Typography in the text | the table in "Typography by language" below |
 
 The font stacks in `base.css` end with a CJK tail, so Latin and Cyrillic come from PT Sans /
@@ -168,8 +168,9 @@ has area+line, stacked columns, a calendar heatmap, a polar rose, a 100 % bar, a
 a scatter, a multi-line, a treemap and horizontal bars. Details and print rules —
 `references/charts.md`.
 
-Call `charts.set_locale(lang)` once before the first chart, or the numbers on the axes carry
-the wrong decimal separator.
+Call `charts.set_locale(lang)` once before the first chart, or the percentages on the axes
+carry the wrong spacing. The decimal separator it does not touch: a period in every language,
+by design.
 
 A PDF has no hover and no tooltips, so **every value must be reachable some other way**:
 labels on the marks, axes, and a summary table with all the numbers in an appendix.
@@ -184,7 +185,7 @@ semi-transparent shapes moiré; build legends in HTML, not in SVG; `Helvetica`/`
 
 | | Russian | English | Chinese |
 |---|---|---|---|
-| Decimal | comma `4,6` | period `4.6` | period `4.6` |
+| Decimal | period `4.6` | period `4.6` | period `4.6` |
 | Thousands | thin space `12 345` | comma `12,345` | comma `12,345` |
 | Before `%`, `°C`, units | non-breaking space | no space (`45%`) | no space (`45%`) |
 | Quotes | «guillemets» | "straight" or "curly", consistently | 「」 or “”, full-width |
@@ -193,9 +194,14 @@ semi-transparent shapes moiré; build legends in HTML, not in SVG; `Helvetica`/`
 | Space after punctuation | one | one | none — the full-width glyph carries its own |
 | Alignment in a narrow column | left (`mobile.css` does it) | left | justified (`base.css` does it for `:lang(zh)`) |
 
-The rule behind the table: punctuation follows the language of the text, not the language of
-whoever is building the report. For a language that is not in the table, follow its own
-convention — and when in doubt, the period-and-no-space set is the safer default.
+The decimal separator is the one deliberate exception: a **period in every language**, even
+where running text would use a comma. A report is read next to code, tables and other
+languages, and one separator everywhere keeps a number unambiguous. `charts.set_locale()`
+enforces it and never switches it — what it does switch is the space before `%`.
+
+The rule behind the rest of the table: punctuation follows the language of the text, not the
+language of whoever is building the report. For a language that is not in the table, follow
+its own convention — and when in doubt, the period-and-no-space set is the safer default.
 
 ## When WeasyPrint is not the right tool
 

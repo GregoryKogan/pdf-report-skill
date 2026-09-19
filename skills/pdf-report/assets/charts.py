@@ -17,26 +17,23 @@ EMPTY="#454F62"                                   # an empty cell, not a zero va
 NBSP="\u00a0"
 
 # ---- number locale ---------------------------------------------------------
-# The separator and the space before % follow the language of the REPORT,
-# not the habit of whoever writes the generator. Call set_locale() ONCE
-# before the first chart.
-DEC="."        # decimal separator; set_locale() switches it per report language
+# The decimal separator is a PERIOD in every language — deliberately, including
+# the languages that write a comma in running text. A chart is read across
+# languages and next to code and tables; one separator everywhere keeps a number
+# unambiguous no matter who is reading it. What does follow the language is the
+# space before %. Call set_locale() ONCE before the first chart.
+DEC="."        # decimal separator: a period in every locale, never switched
 PCT_SP=""      # what sits between the number and the % sign
-_LOCALES={
-    "ru": (",", NBSP), "uk": (",", NBSP), "de": (",", NBSP), "fr": (",", NBSP),
-    "es": (",", NBSP), "it": (",", NBSP), "pl": (",", NBSP), "tr": (",", NBSP),
-    "en": (".", ""),   "zh": (".", ""),   "ja": (".", ""),   "ko": (".", ""),
-}
+_PCT_SPACED={"ru","uk","de","fr","es","it","pl","tr","cs","sv","fi","nb","da"}
 
 def set_locale(lang):
-    """lang — two-letter code of the report language. Unknown -> period, no space."""
-    global DEC, PCT_SP
-    DEC, PCT_SP = _LOCALES.get((lang or "en")[:2].lower(), (".", ""))
+    """lang — two-letter code of the report language. Sets the space before %."""
+    global PCT_SP
+    PCT_SP = NBSP if (lang or "en")[:2].lower() in _PCT_SPACED else ""
 
 def num(x, nd=None):
-    """a number in the report locale: integers keep no tail unless nd is given"""
-    t = f"{x:g}" if nd is None else f"{x:.{nd}f}"
-    return t.replace(".", DEC)
+    """a number for a chart: integers keep no tail unless nd is given"""
+    return f"{x:g}" if nd is None else f"{x:.{nd}f}"
 
 ru = num   # former name, kept so existing generators keep working
 

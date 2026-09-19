@@ -72,7 +72,8 @@ hit "emoji §18"      "[😀-🿿🚀-🛿☀-➿]"
 echo "── typography (here an error IS an error) ──"
 case "$LANG_OPT" in
 ru)
-  hit "decimal point (ru wants a comma)"       "[0-9]\.[0-9]"
+  # a decimal period is intentional here — see "Typography by language" in SKILL.md
+  hit "decimal comma (a period is the house style)"   "[0-9],[0-9]([^0-9]|$)"
   hit "straight quotes (ru wants guillemets)"         "\"[А-Яа-я]"
   ;;
 en)

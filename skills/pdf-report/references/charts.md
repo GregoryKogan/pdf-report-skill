@@ -54,12 +54,15 @@ thickness limit is 23 units (the same 24 px). The defaults in `charts.py` are al
 - Labels are clipped with an ellipsis (`clip()`), never cut mid-word in silence.
 
 ## Numbers and language
-`set_locale(lang)` switches the decimal separator and the space before `%`: `ru/de/fr/es/it/
-pl/tr/uk` get a comma and a non-breaking space, `en/zh/ja/ko` get a period and no space, and
-an unknown language falls back to period-and-no-space. It affects axis labels, values at the
-end of bars and percentages in the 100 % bar — everything the module prints itself. Numbers
-you format in your own generator are your own responsibility; `scripts/prose-check.sh` will
-flag the mismatch for the report's language.
+**The decimal separator is a period in every language** — deliberately, including the ones
+that write a comma in running text. A chart is read next to code, tables and other languages,
+and one separator everywhere keeps a number unambiguous. `num()` never switches it.
+
+What `set_locale(lang)` does switch is the space before `%`: `ru/uk/de/fr/es/it/pl/tr/cs/sv/
+fi/nb/da` get a non-breaking space, everything else gets none. It affects axis labels, values
+at the end of bars and percentages in the 100 % bar — everything the module prints itself.
+Numbers you format in your own generator are your own responsibility: use a period there too,
+or the same document will show both separators.
 
 ## Palette on dark
 Nord as shipped does not pass `validate_palette.js`: chroma below the floor, worst pair at
