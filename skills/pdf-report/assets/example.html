@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<title>Квартальный отчёт по инфраструктуре</title>
+<style>:root{ --docdate:"Q3 2025"; }</style>
+</head><body>
+
+<section class="cover">
+  <div class="kicker">ОТЧЁТ · Q3 2025</div>
+  <h1>Квартальный отчёт по инфраструктуре</h1>
+  <div class="bar"></div>
+  <div class="meta">Инфраструктурная команда · 29 августа 2026</div>
+</section>
+
+<nav class="toc"><h2>Содержание</h2><ol>
+  <li data-t="#s1"><a href="#s1">Резюме</a><span class="dots"></span></li>
+  <li data-t="#s2"><a href="#s2">Метрики</a><span class="dots"></span></li>
+  <li data-t="#s3"><a href="#s3">Риски</a><span class="dots"></span></li>
+</ol></nav>
+
+<h1 id="s1">Резюме</h1>
+<div class="kpis">
+  <div class="kpi"><div class="lbl">Время сборки</div><div class="val">8,8<span class="u"> мин</span></div><div class="dlt up">−38 %</div></div>
+  <div class="kpi"><div class="lbl">Успешные деплои</div><div class="val">96,7<span class="u"> %</span></div><div class="dlt up">+5,3 п.п.</div></div>
+  <div class="kpi"><div class="lbl">MTTR</div><div class="val">22<span class="u"> мин</span></div><div class="dlt up">−53 %</div></div>
+</div>
+<p>За III квартал команда сократила среднее время сборки на <strong>38 %</strong>, перевела 12 из 17 сервисов на новый пайплайн и закрыла 4 из 5 критических инцидентов. Основной риск — задержка миграции биллинга: <code>payments-core</code> остаётся на legacy-раннерах.</p>
+<div class="callout"><p><strong>Ключевой вывод.</strong> Темп миграции достаточен для завершения к концу IV квартала, но требуется выделенный инженер на биллинг.</p></div>
+
+<h1 id="s2">Метрики</h1>
+<table>
+  <thead><tr><th>Показатель</th><th class="num">Q2</th><th class="num">Q3</th><th class="num">Δ</th></tr></thead>
+  <tbody>
+    <tr><td>Время сборки, мин</td><td class="num">14,2</td><td class="num">8,8</td><td class="num up">−38 %</td></tr>
+    <tr><td>Успешные деплои, %</td><td class="num">91,4</td><td class="num">96,7</td><td class="num up">+5,3 п.п.</td></tr>
+    <tr><td>MTTR, мин</td><td class="num">47</td><td class="num">22</td><td class="num up">−53 %</td></tr>
+  </tbody>
+</table>
+
+<figure>
+<svg viewBox="0 0 520 190" font-family="PT Sans" font-size="10">
+  <g stroke="#dfe4ea"><line x1="42" y1="20" x2="510" y2="20"/><line x1="42" y1="60" x2="510" y2="60"/><line x1="42" y1="100" x2="510" y2="100"/><line x1="42" y1="140" x2="510" y2="140"/></g>
+  <g fill="#5d6b7a" text-anchor="end"><text x="34" y="23">16</text><text x="34" y="63">12</text><text x="34" y="103">8</text><text x="34" y="143">4</text></g>
+  <line x1="42" y1="160" x2="510" y2="160" stroke="#16202b"/>
+  <polyline fill="none" stroke="#1f5fa8" stroke-width="2.5" stroke-linejoin="round" points="70,38 148,46 226,72 304,88 382,96 460,100"/>
+  <g fill="#1f5fa8"><circle cx="70" cy="38" r="3.4"/><circle cx="148" cy="46" r="3.4"/><circle cx="226" cy="72" r="3.4"/><circle cx="304" cy="88" r="3.4"/><circle cx="382" cy="96" r="3.4"/><circle cx="460" cy="100" r="3.4"/></g>
+  <g fill="#5d6b7a" text-anchor="middle"><text x="70" y="176">апр</text><text x="148" y="176">май</text><text x="226" y="176">июн</text><text x="304" y="176">июл</text><text x="382" y="176">авг</text><text x="460" y="176">сен</text></g>
+</svg>
+<figcaption>Рис. 1. Медианное время сборки, минуты. Источник: CI-телеметрия.</figcaption>
+</figure>
+
+<h1 id="s3">Риски</h1>
+<ul class="risk">
+  <li class="r-hi"><strong>Высокий.</strong> <code>payments-core</code> — legacy-раннеры, нет владельца миграции.</li>
+  <li class="r-md"><strong>Средний.</strong> Рост стоимости хранения кеша (+12 % м/м).</li>
+  <li class="r-lo"><strong>Низкий.</strong> Флаки-тесты в <code>search-api</code> — 0,4 % прогонов.</li>
+</ul>
+</body></html>

@@ -1,0 +1,12 @@
+/* Light theme — the default token values */
+:root{
+  --tag-bg:#fdeef0; --tag-ink:#992036; --tag-ok-bg:#eaf4e6; --tag-ok-ink:#1a6b3f;
+  --body-font:var(--serif);  /* antiqua reads better on white */
+  --page:#ffffff; --surface:#f6f8fa; --cover-bg:linear-gradient(160deg,#f7fafd,#eaf1f9);
+  --ink:#16202b; --head:#16202b; --muted:#5d6b7a; --faint:#aab3bd;
+  --rule:#dfe4ea; --zebra:#fafbfc; --card-border:.6pt solid #dfe4ea;
+  --th-top:1pt solid #16202b; --tb-last:1pt solid #16202b;
+  --accent:#1f5fa8; --code:#1f5fa8;
+  --pos:#1a7f4b; --neg:#b4243c; --warn:#c98a12;
+  --c1:#2a78d6; --c2:#eb6834; --c3:#1baf7a; --c4:#eda100; --c5:#8a5cf6;
+}

@@ -1,0 +1,17 @@
+/* Nord dark theme. The chart palette was checked with dataviz/scripts/validate_palette.js
+   against #2E3440: worst pair ΔE 18.8 (normal vision) / 11.7 (CVD), contrast ≥ 3:1. */
+:root{
+  --tag-bg:#4a2f36; --tag-ink:#e88d94; --tag-ok-bg:#33422e; --tag-ok-ink:#a9cf88;
+  --body-font:var(--sans);   /* antiqua smears on dark — grotesque instead */
+  --page:#2E3440; --surface:#3B4252;
+  --cover-bg:linear-gradient(178deg,#2E3440 0%,#333b49 55%,#3B4252 100%);
+  --ink:#D8DEE9; --head:#ECEFF4; --muted:#A2ADC0; --faint:#4C566A;
+  --rule:#434C5E; --zebra:transparent; --card-border:none;
+  --th-top:1pt solid #4C566A; --tb-last:none;
+  --accent:#60c4de; --code:#60c4de;
+  --pos:#92b96e; --neg:#e88d94; --warn:#cba553;
+  /* categorical slots — fixed order, never shuffled */
+  --c1:#60c4de; --c2:#d4af62; --c3:#b77bad; --c4:#9ec27e; --c5:#c9785f;
+  /* sequential ramp: one hue, monotone lightness */
+  --s1:#21697c; --s2:#3a8ea5; --s3:#59b2cb; --s4:#7cd3eb; --s0:#454F62;
+}

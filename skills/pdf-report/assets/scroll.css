@@ -1,0 +1,44 @@
+/* "Scroll" format: ONE long page, no breaks at all.
+   scripts/fit-scroll.py finds the height — never set size by hand.
+
+   The size was tuned by rendering into a real phone width (390 px), not by eye:
+   at 136 mm and 13.5 pt the text on screen is the equivalent of ~13.7 px on the web
+   at 48 characters per line. Smaller is too small (verified), larger and the line
+   starts breaking with hyphens. One knob — --body-pt; the rest are in em. */
+@page{ margin:var(--pm-t) var(--pm-x) var(--pm-b);
+       @top-left{content:none} @top-right{content:none} @bottom-center{content:none} }
+:root{
+  --body-pt:13.5pt;                 /* the one size knob */
+  --scroll-w:136mm;                 /* build.sh passes the width to fit-scroll.py */
+  --cover-pad:14mm; --pm-t:11mm; --pm-x:11mm; --pm-b:13mm;
+}
+html{ font-family:var(--body-font); font-size:var(--body-pt); line-height:1.6; font-weight:400 }
+p{ text-align:left }
+
+/* no page breaks needed: there is one page */
+.sec,.pagebreak,.toc,.cover{ break-before:auto !important; break-after:auto !important }
+
+/* There is one page, so a named @page cover is unusable: its zero margins would
+   stretch across the whole document. The cover bleeds out with negative margins. */
+.cover{ page:auto; height:auto;
+        margin:calc(-1 * var(--pm-t)) calc(-1 * var(--pm-x)) 0;
+        padding:26mm var(--cover-pad) 20mm }
+.cover.art{ padding-bottom:20mm }
+
+/* contents without page numbers: one page makes the number meaningless */
+.toc li::after{ content:none }
+.toc .dots{ display:none }
+.toc li{ gap:10px }
+
+/* rules instead of page breaks */
+.sec{ margin-top:2.2em; padding-top:1.6em; border-top:.5pt solid var(--rule) }
+.sec:first-of-type{ border-top:none; padding-top:0 }
+
+/* everything in em — follows --body-pt */
+.cover h1{ font-size:2.1em } h1{ font-size:1.3em } h2{ font-size:1em }
+.hero .v{ font-size:3.8em } .kpi .val{ font-size:1.5em }
+table{ font-size:.84em } pre{ font-size:.74em }
+
+/* In scroll mode the cover is height:auto, so the absolute .foot (bottom:11mm from
+   base.css) lands on the seam with the text and becomes unreadable. Back into flow. */
+.cover .foot{ position:static; margin-top:14mm }

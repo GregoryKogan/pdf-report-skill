@@ -1,0 +1,10 @@
+/* Print / desktop format */
+@page{ size:A4; margin:22mm 24mm 20mm }
+:root{ --cover-pad:28mm }
+html{ font-family:var(--body-font); font-size:10.5pt; line-height:1.58; font-weight:400 }
+p{ text-align:justify }
+.cover{ height:297mm; padding:0 var(--cover-pad) }
+.cover h1{ font-size:32pt }
+h1{ font-size:17pt } h2{ font-size:12.5pt }
+.hero .v{ font-size:48pt } .kpi .val{ font-size:19pt }
+.toc ol{ font-size:10.5pt } table{ font-size:10pt }

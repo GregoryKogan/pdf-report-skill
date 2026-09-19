@@ -1,0 +1,12 @@
+/* Screen format: paginated A5. The sheet width is fixed by the format, so the
+   size is dialled in with the font size: 12.5 pt gives 55 characters per line. */
+@page{ size:148mm 210mm; margin:14mm 13mm 13mm }
+:root{ --cover-pad:16mm; --fs-chrome:7.5pt }
+html{ font-family:var(--body-font); font-size:12.5pt; line-height:1.58; font-weight:400 }
+p{ text-align:left }            /* narrow column: no justification, or the lines open up holes */
+.cover{ height:210mm; padding:0 var(--cover-pad) }
+.cover h1{ font-size:24pt }
+h1{ font-size:15pt } h2{ font-size:11.5pt }
+.hero .v{ font-size:44pt } .kpi .val{ font-size:17pt }
+.toc ol{ font-size:10pt } table{ font-size:9pt }
+pre{ font-size:8.5pt }
