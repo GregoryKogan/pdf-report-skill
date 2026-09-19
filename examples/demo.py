@@ -72,7 +72,7 @@ T = {
   c1t="Посещения по месяцам", c1c="Одна серия — легенда не нужна. Подписаны пик и последнее значение.",
   s3="Что берут читать", sub3="Доля выдач по разделам",
   c2t="Выдачи по разделам", c2c="Тысячи выдач, январь—сентябрь.",
-  p3="Проза и детские книги дают 62 % всех выдач. Быстрее всех вырос научный раздел — на 40 %, "
+  p3="Проза и детские книги дают 62% всех выдач. Быстрее всех вырос научный раздел — на 40%, "
      "и при этом он стартовал с самой маленькой базы из трёх.",
   s4="Приложение", sub4="Все числа отчёта",
   th=["Месяц", "Посещений, тыс.", "Выдач, тыс."],
@@ -106,7 +106,6 @@ T = {
 
 def build(lang):
     t = T[lang]
-    ch.set_locale(lang)
     m = MONTHS[lang]
     shelf_names = {
         "en": ["fiction", "children", "science", "history", "art", "reference"],
@@ -145,7 +144,7 @@ def build(lang):
 
 <section class="sec"><div class="num-lbl">01</div><h1 id="s1">{t['s1']}</h1>
 <div class="sub">{t['sub1']}</div>
-<div class="hero"><div class="v">68{ch.PCT_SP}%</div><div class="l">{t['hero_l']}</div></div>
+<div class="hero"><div class="v">68%</div><div class="l">{t['hero_l']}</div></div>
 <div class="kpis">{kpis}</div>
 <p class="lead">{t['lead']}</p>
 <p>{t['p2']}</p>

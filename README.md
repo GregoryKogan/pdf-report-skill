@@ -25,9 +25,10 @@
 ## Language
 
 The report speaks the language of the request. Same generator, same markup, same build —
-what changes is the prose, `<html lang>`, the spacing around `%` and the typographic
-conventions of that language. The decimal separator stays a period in all of them, on
-purpose — a report is read next to code and tables, and one separator is one less ambiguity.
+what changes is the prose, `<html lang>` and the typographic conventions of that language.
+Numbers are written identically everywhere on purpose — `4.6`, `45%`, a minus rather than a
+hyphen — because a report is read next to code and tables, and one notation is one ambiguity
+less. The table below lists only what actually differs.
 
 <p align="center">
   <img src="docs/readme/languages.png" alt="The same report built in English, Russian and Chinese" width="100%">
@@ -36,15 +37,14 @@ purpose — a report is read next to code and tables, and one separator is one l
 | | English | Russian | Chinese |
 |---|---|---|---|
 | Sample | [demo-en.pdf](docs/examples/demo-en.pdf) | [demo-ru.pdf](docs/examples/demo-ru.pdf) | [demo-zh.pdf](docs/examples/demo-zh.pdf) |
-| Decimal | `4.6` | `4.6` | `4.6` |
-| Before `%` | none | non-breaking space | none |
+| Thousands | `12,345` | `12 345` | `12,345` |
 | Quotes | "…" | «…» | 「…」 |
 | Line breaking | hyphenation | hyphenation | `line-break:strict`, no hyphens |
+| Body font | PT Serif / PT Sans | PT Serif / PT Sans | + PingFang / Noto Sans CJK |
 | Humanizer | [blader/humanizer](https://github.com/blader/humanizer) | [ilyautov/humanizer-ru](https://github.com/ilyautov/humanizer-ru) | [op7418/Humanizer-zh](https://github.com/op7418/Humanizer-zh) |
 
-Han characters fall back to PingFang / Noto Sans CJK / Source Han automatically; Latin and
-Cyrillic stay on PT Sans and PT Serif. Any other language works too — it inherits the neutral
-defaults (period, no space before `%`) and the structural rules of the English humanizer.
+Any other language works too: it inherits the shared number notation and the structural rules
+of the English humanizer.
 
 ## About
 

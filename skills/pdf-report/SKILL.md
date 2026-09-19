@@ -48,12 +48,12 @@ subject matter into your own default language, and never ask which language to u
 request already answered it. Mixed input: follow the language of the instructions, not the
 language of the quoted data.
 
-Three things depend on that language, and all three are set explicitly:
+Two things depend on that language, and both are set explicitly (numbers do not: they are
+written identically in every language — see "Typography by language"):
 
 | What | How |
 |---|---|
 | Line breaking and fonts | `<html lang="ru">` / `"en"` / `"zh"` — `base.css` keys hyphenation, CJK rules and the font fallback off it |
-| Numbers in charts | `charts.set_locale("ru")` **once, before the first chart** — the space before `%` (the decimal separator is a period everywhere) |
 | Typography in the text | the table in "Typography by language" below |
 
 The font stacks in `base.css` end with a CJK tail, so Latin and Cyrillic come from PT Sans /
@@ -168,9 +168,8 @@ has area+line, stacked columns, a calendar heatmap, a polar rose, a 100 % bar, a
 a scatter, a multi-line, a treemap and horizontal bars. Details and print rules —
 `references/charts.md`.
 
-Call `charts.set_locale(lang)` once before the first chart, or the percentages on the axes
-carry the wrong spacing. The decimal separator it does not touch: a period in every language,
-by design.
+Numbers in charts need no configuration: `num()` writes a period for the decimal separator
+and no space before `%` in every language, exactly as the rest of the report does.
 
 A PDF has no hover and no tooltips, so **every value must be reachable some other way**:
 labels on the marks, axes, and a summary table with all the numbers in an appendix.
@@ -183,25 +182,27 @@ semi-transparent shapes moiré; build legends in HTML, not in SVG; `Helvetica`/`
 
 ## Typography by language
 
+**The same in every language**, deliberately, even where running text in that language would
+do otherwise. A report is read next to code, tables and other languages, and one notation is
+one ambiguity less:
+
+- decimal separator — a period: `4.6`
+- before `%`, `°C` and units — no space: `45%`, `20°C`
+- minus — `−`, never a hyphen
+
+`charts.py` writes numbers this way on its own; in your own generator, match it.
+
+**Follows the language of the text**, not the language of whoever builds the report:
+
 | | Russian | English | Chinese |
 |---|---|---|---|
-| Decimal | period `4.6` | period `4.6` | period `4.6` |
 | Thousands | thin space `12 345` | comma `12,345` | comma `12,345` |
-| Before `%`, `°C`, units | non-breaking space | no space (`45%`) | no space (`45%`) |
 | Quotes | «guillemets» | "straight" or "curly", consistently | 「」 or “”, full-width |
 | Dash | `—` with spaces | `—` unspaced, sparingly | `——` full-width |
-| Minus | `−`, not a hyphen | `−`, not a hyphen | `−`, not a hyphen |
 | Space after punctuation | one | one | none — the full-width glyph carries its own |
 | Alignment in a narrow column | left (`mobile.css` does it) | left | justified (`base.css` does it for `:lang(zh)`) |
 
-The decimal separator is the one deliberate exception: a **period in every language**, even
-where running text would use a comma. A report is read next to code, tables and other
-languages, and one separator everywhere keeps a number unambiguous. `charts.set_locale()`
-enforces it and never switches it — what it does switch is the space before `%`.
-
-The rule behind the rest of the table: punctuation follows the language of the text, not the
-language of whoever is building the report. For a language that is not in the table, follow
-its own convention — and when in doubt, the period-and-no-space set is the safer default.
+For a language that is not in the table, follow its own convention.
 
 ## When WeasyPrint is not the right tool
 

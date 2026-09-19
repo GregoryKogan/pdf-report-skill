@@ -7,12 +7,11 @@ such skill). What follows are only the corrections for print.
 ```python
 import sys; sys.path.insert(0, "<path to assets>")
 from charts import *
-set_locale("ru")               # ONCE before the first chart: decimal separator, space before %
 area_line(labels, vals, ymax, unit="", label_idx=[6,11])   # area + line, selective labels
 stacked_cols(labels, [s1,s2,s3], [C1,C2,C3], ymax)          # stack, total above the column
 heatmap(rows, months)          # rows: 0=empty, 1..4=ramp, None=no cell at all
 polar(vals24)                  # rose by hour
-share_bar(items, colors)       # 100 % bar; draw the legend in HTML!
+share_bar(items, colors)       # 100% bar; draw the legend in HTML!
 spark(vals)                    # sparkline for a table cell
 scatter([(name,pts),…], colors)
 multi_line(xs, [(name,vals),…], colors, ymax=, xlabel=)   # continuous axis, ≤4 series
@@ -53,16 +52,15 @@ thickness limit is 23 units (the same 24 px). The defaults in `charts.py` are al
 - The grid is a solid hairline one step off the surface, never a dashed line.
 - Labels are clipped with an ellipsis (`clip()`), never cut mid-word in silence.
 
-## Numbers and language
-**The decimal separator is a period in every language** — deliberately, including the ones
-that write a comma in running text. A chart is read next to code, tables and other languages,
-and one separator everywhere keeps a number unambiguous. `num()` never switches it.
+## Numbers
+**Numbers look the same in every language** — a period for the decimal separator and no space
+before `%` — including the languages that write a comma and a space in running text. A chart
+is read next to code, tables and other languages, and one notation is one ambiguity less.
+There is nothing to configure: `num()` writes them that way and never switches.
 
-What `set_locale(lang)` does switch is the space before `%`: `ru/uk/de/fr/es/it/pl/tr/cs/sv/
-fi/nb/da` get a non-breaking space, everything else gets none. It affects axis labels, values
-at the end of bars and percentages in the 100 % bar — everything the module prints itself.
-Numbers you format in your own generator are your own responsibility: use a period there too,
-or the same document will show both separators.
+That covers everything the module prints itself: axis labels, values at the end of bars,
+percentages in the 100% bar. Numbers you format in your own generator are your own
+responsibility — write them the same way, or one document will show two notations.
 
 ## Palette on dark
 Nord as shipped does not pass `validate_palette.js`: chroma below the floor, worst pair at

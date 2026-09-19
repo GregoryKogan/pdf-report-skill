@@ -16,21 +16,11 @@ SEQ=["#21697c","#3a8ea5","#59b2cb","#7cd3eb"]   # sequential, one hue, monotone 
 EMPTY="#454F62"                                   # an empty cell, not a zero value
 NBSP="\u00a0"
 
-# ---- number locale ---------------------------------------------------------
-# The decimal separator is a PERIOD in every language — deliberately, including
-# the languages that write a comma in running text. A chart is read across
-# languages and next to code and tables; one separator everywhere keeps a number
-# unambiguous no matter who is reading it. What does follow the language is the
-# space before %. Call set_locale() ONCE before the first chart.
-DEC="."        # decimal separator: a period in every locale, never switched
-PCT_SP=""      # what sits between the number and the % sign
-_PCT_SPACED={"ru","uk","de","fr","es","it","pl","tr","cs","sv","fi","nb","da"}
-
-def set_locale(lang):
-    """lang — two-letter code of the report language. Sets the space before %."""
-    global PCT_SP
-    PCT_SP = NBSP if (lang or "en")[:2].lower() in _PCT_SPACED else ""
-
+# ---- numbers ---------------------------------------------------------------
+# Numbers are written the same way in every language, deliberately: a period for
+# the decimal separator and no space before %, even in the languages that would
+# write a comma and a space in running text. A report is read next to code,
+# tables and other languages, and one notation is one ambiguity less.
 def num(x, nd=None):
     """a number for a chart: integers keep no tail unless nd is given"""
     return f"{x:g}" if nd is None else f"{x:.{nd}f}"
@@ -181,7 +171,7 @@ def share_bar(items, colors, W=420, H=32):
     for (sx,sw,pct) in segs:
         if sw>46:   # label inside only when it fits with margins
             o.append(f'<text x="{sx+sw/2:.1f}" y="{bh/2+4:.1f}" fill="{N0}" font-size="14.5" '
-                     f'font-weight="700" text-anchor="middle">{num(pct, 0)}{PCT_SP}%</text>')
+                     f'font-weight="700" text-anchor="middle">{num(pct, 0)}%</text>')
     return svg(W,H,"".join(o))
 
 # ---------------------------------------------------------------- sparkline
