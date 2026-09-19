@@ -23,6 +23,8 @@
 | CJK text renders as boxes | No CJK font on the machine. `brew install --cask font-noto-sans-cjk-sc` or `apt install fonts-noto-cjk`; the fallback tail is already in `base.css` |
 | A CJK line breaks in the middle of a Latin word or a number | `word-break` was set to `break-all` somewhere. `base.css` uses `line-break:strict; word-break:normal` for `:lang(zh)` — that breaks between Han characters but keeps Latin runs whole |
 | The number in the table of contents sticks to the text | Hang the counter on `li::after` with `attr(data-t)`, not on `a::after` — otherwise it lands before the dot leader |
+| A **highlighted** code line runs off the page, the same line wraps fine unhighlighted | **`overflow-wrap` and `word-break` do not break between adjacent inline boxes.** Syntax highlighting splits the line into `<span>`s, and each one becomes unbreakable, so the whole run overflows. Measured: the same 74-character line wraps at 206 pt as plain text and reaches 595 pt once wrapped in spans, with either `overflow-wrap:anywhere` or `word-break:break-all`. There is no CSS that fixes this — **wrap the line in the source**, the way you would in the code it came from. `build.sh` reports it, so you find out at build time rather than from a reader |
+| Inline `<code>` in a table splits mid-word ("pre_cal" + "l") | `overflow-wrap:anywhere` on inline code. `anywhere` also shrinks min-content to a single character, so the table gives the column almost no width and then breaks the word to fit. Inline code wants `break-word` (break only a word that would not fit a line of its own); `anywhere` is right for `pre`, which owns its line |
 
 ## Measuring page fill — carefully
 
@@ -33,6 +35,14 @@ broken and ruin a working layout.
 What to measure is **how far the content reaches**, excluding the first and last pages of
 chapters: `last inked line / page height`. The norm is 0.95 and up. The "share of lines with
 ink" metric is useless here: for normal text it sits around 0.5 simply because of leading.
+
+That share is still worth computing for a different job — not judging a page, but **choosing
+which pages to open first** on a long document, where "look at every PNG" is 60+ images.
+Compare each page's inked share against the document's own median and open the outliers.
+On a 67-page book the median was 7.9 %; the page that turned out to hold a heading and
+nothing else measured 0.33 %, two orders below its neighbours, and a long `<pre>` that had
+jumped whole to the next page was the cause. Cover, contents and chapter-end pages come up
+in the same list and are fine — the number picks the candidates, you still look.
 
 One more: `h2,h3{break-before:avoid}` **makes it worse**. Combined with `break-after:avoid` on
 the heading itself it glues the heading to both the previous and the following block, which

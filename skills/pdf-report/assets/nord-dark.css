@@ -9,6 +9,10 @@
   --rule:#434C5E; --zebra:transparent; --card-border:none;
   --th-top:1pt solid #4C566A; --tb-last:none;
   --accent:#60c4de; --code:#60c4de;
+  /* code tokens — Nord hues raised to ≥4.5:1 on --surface (see base.css) */
+  --tok-comment:#A5AEBE; --tok-keyword:#96B1CB; --tok-string:#A3BE8C;
+  --tok-number:#C3A5BD;  --tok-func:#88C0D0;    --tok-builtin:#8FBCBB;
+  --tok-attr:#EBCB8B;    --tok-operator:#96B1CB; --tok-error:#D89FA4;
   --pos:#92b96e; --neg:#e88d94; --warn:#cba553;
   /* categorical slots — fixed order, never shuffled */
   --c1:#60c4de; --c2:#d4af62; --c3:#b77bad; --c4:#9ec27e; --c5:#c9785f;

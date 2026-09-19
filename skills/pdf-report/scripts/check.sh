@@ -17,6 +17,7 @@ print(f'  {sum(total(i) for i in o)} on all levels · top level: {top}' if o
       else '  NONE — check h1/h2')"
 # head closes the pipe early: without the guard, SIGPIPE + pipefail kills the script
 # here, and the PNG export below never runs — silently skipping the mandatory look.
+echo "── text outside the column ──"; python3 "$(dirname "${BASH_SOURCE[0]}")/overflow.py" "$F" || true
 echo "── text extracts ──"; { pdftotext "$F" - | tr -s '\n' ' ' | head -c 120; } || true; echo
 mkdir -p "$D"; pdftoppm -png -r 110 "$F" "$D/p"
 # `[ … ] && P=…` returns 1 whenever the test is false, which set -e treats as failure

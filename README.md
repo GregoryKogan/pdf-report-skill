@@ -73,6 +73,7 @@ cp -R pdf-report-skill/skills/pdf-report ~/.claude/skills/pdf-report
 
 # the engine
 brew install weasyprint poppler qpdf            # macOS
+pip install pygments                            # optional: syntax highlighting
 # pip install weasyprint && sudo apt install poppler-utils qpdf   # Linux
 
 # the humanizer for the language you write in (required by the skill)
@@ -100,6 +101,15 @@ procedure, not an optional extra: on the sample report that pass caught 13 defec
 automated check finds — timeline events out of order, a legend spilling outside its SVG,
 "empty" calendar cells that turned out invisible.
 
+Code blocks tagged `<pre><code class="language-python">` are highlighted at build time by
+Pygments, in Nord, in whichever theme — each hue moved until it clears 4.5:1 on the code
+background. Untagged blocks stay plain, so console transcripts and pseudo-output are not
+mangled by a guessed lexer.
+
+`build.sh` and `check.sh` both run `overflow.py`, which measures the rendered page and names
+anything that ended up outside the text column — the one defect that renders cleanly, extracts
+cleanly and is invisible at thumbnail size.
+
 ## What's in the box
 
 | Path | What it is |
@@ -107,10 +117,10 @@ automated check finds — timeline events out of order, a legend spilling outsid
 | [`skills/pdf-report/SKILL.md`](skills/pdf-report/SKILL.md) | the procedure the agent follows |
 | [`references/markup.md`](skills/pdf-report/references/markup.md) | every class `base.css` understands |
 | [`references/charts.md`](skills/pdf-report/references/charts.md) | the chart API and the print corrections |
-| [`references/gotchas.md`](skills/pdf-report/references/gotchas.md) | 20 WeasyPrint traps, each with its fix |
+| [`references/gotchas.md`](skills/pdf-report/references/gotchas.md) | 22 WeasyPrint traps, each with its fix |
 | [`assets/charts.py`](skills/pdf-report/assets/charts.py) | area+line, stacked columns, heatmap, polar rose, 100 % bar, sparkline, scatter, multi-line, treemap, horizontal bars |
 | `assets/*.css` | structure, two themes, four formats |
-| [`scripts/`](skills/pdf-report/scripts) | build, fit-scroll, check, prose-check |
+| [`scripts/`](skills/pdf-report/scripts) | build, fit-scroll, highlight, overflow, check, prose-check |
 | [`examples/demo.py`](examples/demo.py) | one report in three languages |
 | [`docs/examples/`](docs/examples) | the built PDFs |
 
@@ -122,7 +132,8 @@ floor: worst pair ΔE 18.8 for normal vision, 11.7 under colour-vision deficienc
 ## Requirements
 
 WeasyPrint 69, Poppler (`pdfinfo`, `pdftoppm`, `pdftotext`, `pdffonts`), qpdf, Python 3.9+,
-bash. macOS and Linux. `build.sh` finds a Python that can `import weasyprint` on its own;
+bash. Pygments is optional — without it code renders plain and the build says so. macOS and
+Linux. `build.sh` finds a Python that can `import weasyprint` on its own;
 point `PDFREPORT_PYTHON` at a specific one if you keep it somewhere unusual.
 
 PT Sans, PT Serif and Menlo come from the system on macOS; on Linux install

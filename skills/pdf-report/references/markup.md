@@ -34,7 +34,37 @@ onto the cover. That is what `--doctitle` is for.
 | Table | a plain `table` (+`.dense`, `.wide`), number cells get `.num` |
 | Timeline | `.tl` → `.e` with `style="--dot:colour"` → `.d`, `.h`, `.b`. **Strictly in ascending date order** |
 | Meter | `.goal` → `.r` (label + values), `.track` → `<i style="width:…">` + `<u style="left:…">` (plan tick) |
+| Code | `<pre><code class="language-python">` — see below; without the class the block stays plain |
 | Breaks | `.sec` — section on a new page; `.pagebreak`, `.keep` |
+
+## Code blocks: tag the language, and wrap the long lines yourself
+
+`build.sh` runs `scripts/highlight.py` over the document before rendering: every
+`<pre><code class="language-XXX">` comes out with Pygments token spans, coloured from the
+theme. Any name Pygments knows works — `python`, `yaml`, `json`, `bash`, `sql`, `go`, `diff`.
+The palette is Nord in both themes, with each hue moved until it clears 4.5:1 on the code
+background; the stock Pygments `nord` style assumes a darker background and its comment
+colour measures 1.96:1 on ours, which is why the colours live in the theme files instead.
+
+**Highlighting is opt-in per block, deliberately.** A guessed lexer mangles exactly the
+blocks a report leans on — console transcripts, pseudo-output, before/after sketches — and a
+wrong guess reads as meaning. Leave those blocks untagged and they render as plain text.
+
+**A highlighted line will not wrap.** WeasyPrint does not break between inline boxes, and
+highlighting turns the line into a row of them, so a line too long for the column runs off
+the page instead of folding (see `gotchas.md`). Wrap long lines in the source the way the
+language would:
+
+```
+tasks.append(asyncio.create_task(          ← not one 74-character line
+    proxy_logging_obj.during_call_hook(...)))
+```
+
+What has to fit is not the line but its **longest run without a space** — spaces still break
+normally, so an 78-character line full of spaces is fine while a 74-character identifier is
+not. Measured on a book column (120 mm): about 70 characters of unbroken run fit, ~80 on a
+scroll (136 mm). You do not have to count: `build.sh` measures the rendered PDF and names any
+line that ended up outside the column, with how far out it went.
 
 ## Cover with artwork: two zones that never overlap
 

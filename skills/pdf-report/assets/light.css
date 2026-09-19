@@ -7,6 +7,10 @@
   --rule:#dfe4ea; --zebra:#fafbfc; --card-border:.6pt solid #dfe4ea;
   --th-top:1pt solid #16202b; --tb-last:1pt solid #16202b;
   --accent:#1f5fa8; --code:#1f5fa8;
+  /* code tokens — the same Nord hues darkened to ≥4.5:1 on --surface #f6f8fa */
+  --tok-comment:#616E87; --tok-keyword:#4D759D; --tok-string:#5E7A45;
+  --tok-number:#94628B;  --tok-func:#387A8D;    --tok-builtin:#497A79;
+  --tok-attr:#946B1A;    --tok-operator:#4D759D; --tok-error:#B8515B;
   --pos:#1a7f4b; --neg:#b4243c; --warn:#c98a12;
   --c1:#2a78d6; --c2:#eb6834; --c3:#1baf7a; --c4:#eda100; --c5:#8a5cf6;
 }

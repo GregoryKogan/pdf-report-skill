@@ -22,13 +22,18 @@ scripts live next to this file. Never start the layout from scratch.
 
 1. **Check the tools.** `command -v weasyprint pdfinfo qpdf` — if missing,
    `brew install weasyprint poppler qpdf` (macOS) or
-   `pip install weasyprint && apt install poppler-utils qpdf` (Linux). Also check for the
-   humanizer skill that matches the report's language (table below); install it if absent.
+   `pip install weasyprint && apt install poppler-utils qpdf` (Linux). `pip install pygments`
+   too if the report carries code. Also check for the humanizer skill that matches the
+   report's language (table below); install it if absent.
 2. **Write the text in the user's language and run it through the humanizer.** Mandatory,
    see the humanizer section.
 3. **Mark it up.** HTML with the classes from `references/markup.md`, no custom CSS.
    Starting point — `assets/example-dark.html`; the light sample is `assets/example.html`.
    Set `<html lang="…">`: hyphenation, CJK line breaking and font fallback hang off it.
+   Code goes in `<pre><code class="language-python">` — `build.sh` highlights it on its own,
+   in Nord, in whichever theme. Tag only real source: a console transcript or a before/after
+   sketch stays plain, because a wrong lexer reads as meaning. And wrap long code lines by
+   hand — a highlighted line cannot fold (`references/markup.md` has the numbers).
 4. **Build.** `scripts/build.sh report.html [outdir]` → **one file** `report.pdf`:
    Nord dark theme, "scroll" format — ONE page of whatever length it needs, no page breaks
    at all. `scripts/fit-scroll.py` finds the height by binary search. A long document
@@ -38,6 +43,10 @@ scripts live next to this file. Never start the layout from scratch.
    eyes, every single one.** This is not a formality: on the demo report that pass found
    13 defects no automated test catches — timeline events out of order, a legend spilling
    outside its SVG, "empty" calendar cells that were invisible.
+   Two things are measured for you, so do not spend eyes on them: `scripts/overflow.py`
+   (run by both `build.sh` and `check.sh`) names anything sitting outside the text column,
+   and on a long document an ink-coverage pass over the PNGs finds the near-empty pages
+   worth opening first — see "Measuring page fill" in `references/gotchas.md`.
 6. **Ship one file.** That is the default, not a simplification — see the section below.
 
 ## Language: the report speaks the language of the request

@@ -36,11 +36,36 @@ p{ margin:0 0 .75em }
 ul,ol{ margin:0 0 .8em; padding-left:1.4em } li{ margin:.3em 0 }
 strong{ color:var(--head) }
 a{ color:var(--accent); text-decoration:none }
+/* Wrapping in code is load-bearing, not a nicety: `white-space:pre-wrap` breaks at spaces
+   only, so one long dotted identifier (a.b.c(d.e(...))) or a URL runs straight off the
+   page — WeasyPrint has no viewport to scroll, and the overflow is silent.
+   The two values differ on purpose. `anywhere` also shrinks min-content to one character,
+   which is right for a pre (it owns its line) and wrong for inline code (it lets a table
+   column collapse and hyphen-less-split `pre_call` into "pre_cal" + "l"), so inline code
+   gets `break-word`: break a word only when it would not fit on a line of its own. */
 code{ font:400 .87em var(--mono); background:var(--surface); color:var(--code);
-      padding:.08em .32em; border-radius:3px }
+      padding:.08em .32em; border-radius:3px; overflow-wrap:break-word }
 pre{ font:400 .84em/1.5 var(--mono); background:var(--surface); border:.5pt solid var(--rule);
-     border-radius:5px; padding:10pt 12pt; break-inside:avoid; white-space:pre-wrap }
-pre code{ background:none; padding:0 }
+     border-radius:5px; padding:10pt 12pt; break-inside:avoid;
+     white-space:pre-wrap; overflow-wrap:anywhere }
+pre code{ background:none; padding:0; color:var(--ink) }
+
+/* Syntax highlighting. scripts/highlight.py emits Pygments classes with a tok- prefix;
+   the hues are Nord, lightened/darkened per theme until every one clears 4.5:1 on the
+   code background (the stock Pygments `nord` style assumes #2E3440, but pre sits on
+   --surface #3B4252, where its comment colour measures 1.96:1). */
+.tok-c,.tok-c1,.tok-ch,.tok-cm,.tok-cp,.tok-cpf,.tok-cs{ color:var(--tok-comment); font-style:italic }
+.tok-k,.tok-kc,.tok-kd,.tok-kn,.tok-kp,.tok-kr,.tok-kt,.tok-ow,.tok-gh,.tok-gu{ color:var(--tok-keyword) }
+.tok-s,.tok-s1,.tok-s2,.tok-sa,.tok-sb,.tok-sc,.tok-sd,.tok-se,.tok-sh,.tok-si,
+.tok-sr,.tok-ss,.tok-sx,.tok-dl,.tok-ld,.tok-l,.tok-gi{ color:var(--tok-string) }
+.tok-m,.tok-mb,.tok-mf,.tok-mh,.tok-mi,.tok-mo,.tok-il{ color:var(--tok-number) }
+.tok-nf,.tok-fm,.tok-nd,.tok-ne{ color:var(--tok-func) }
+.tok-nb,.tok-bp,.tok-no,.tok-nc,.tok-nn{ color:var(--tok-builtin) }
+.tok-na,.tok-nt,.tok-nl,.tok-py,.tok-nv,.tok-vc,.tok-vg,.tok-vi,.tok-vm{ color:var(--tok-attr) }
+.tok-o,.tok-p,.tok-pm{ color:var(--tok-operator) }
+.tok-err,.tok-gr,.tok-gt,.tok-gd{ color:var(--tok-error) }
+.tok-n,.tok-ni,.tok-nx,.tok-esc,.tok-g,.tok-go,.tok-gp,.tok-w,.tok-x{ color:var(--ink) }
+.tok-gs{ font-weight:700 } .tok-ge,.tok-ges{ font-style:italic }
 hr{ border:none; border-top:.5pt solid var(--rule); margin:1.4em 0 }
 .lead{ font-family:var(--serif); font-size:1.05em; line-height:1.5 }
 .sub{ color:var(--muted); font-size:.86em; margin:.15em 0 1.1em }
